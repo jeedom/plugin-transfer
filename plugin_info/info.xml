@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<info>
+    <id>transfert</id>
+    <name>Transfert</name>
+    <description>Plugin pour transferer des fichiers (capture caméra par exemple)</description>
+    <icon>fa fa-keyboard-o</icon>
+    <licence>AGPL</licence>
+    <author>Loïc Gevrey</author>
+    <installation>Aucune</installation>
+    <require>2.3</require>
+    <category>programming</category>
+</info>
+
