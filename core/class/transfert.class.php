@@ -62,19 +62,25 @@ class transfert extends eqLogic {
 	public function samba_put($_files = array()) {
 		$smb_file = array();
 		$cmd = '';
+		if (!file_exists('/tmp/jeedom_samba_transfert')) {
+			mkdir('/tmp/jeedom_samba_transfert');
+		}
 		foreach ($_files as $file) {
 			$info = pathinfo($file);
 			$filename = str_replace(array('_', ':'), array('-', '-'), $info['basename']);
-			$cmd .= 'mv ' . $file . ' /tmp/' . $filename . ';';
+			$cmd .= 'mv ' . $file . ' /tmp/jeedom_samba_transfert/' . $filename . ';';
 			$smb_file[] = $filename;
 		}
-		$cmd .= 'cd /tmp;';
+		$cmd .= 'cd /tmp/jeedom_samba_transfert;';
 		$cmd .= 'sudo smbclient ' . $this->getConfiguration('samba::share') . ' -U ' . $this->getConfiguration('samba::username') . '%' . $this->getConfiguration('samba::password') . ' -I ' . $this->getConfiguration('samba::ip');
 		$cmd .= ' -c "cd ' . $this->getConfiguration('samba::path') . ';';
 		foreach ($smb_file as $file) {
 			$cmd .= 'put ' . $file . ';';
 		}
-		$cmd .= '" >> /dev/null 2>&1';
+		$cmd .= '" >> /dev/null 2>&1;';
+		foreach ($smb_file as $file) {
+			$cmd .= 'sudo rm /tmp/jeedom_samba_transfert/' . $file . ';';
+		}
 		log::add('transfert', 'debug', $cmd);
 		try {
 			com_shell::execute($cmd);
