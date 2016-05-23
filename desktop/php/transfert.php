@@ -22,8 +22,7 @@ foreach ($eqLogics as $eqLogic) {
  </div>
 
  <div class="col-lg-10 col-md-9 col-sm-8 eqLogicThumbnailDisplay" style="border-left: solid 1px #EEE; padding-left: 25px;">
-  <legend>{{Mes transfert}}
-  </legend>
+  <legend>{{Mes transfert}}</legend>
 
   <div class="eqLogicThumbnailContainer">
     <div class="cursor eqLogicAction" data-action="add" style="background-color : #ffffff; height : 200px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;" >
@@ -68,66 +67,69 @@ foreach (object::all() as $object) {
 	echo '<option value="' . $object->getId() . '">' . $object->getName() . '</option>';
 }
 ?>
-              </select>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-3 control-label" >{{Activer}}</label>
-            <div class="col-sm-9">
-             <input type="checkbox" class="eqLogicAttr bootstrapSwitch" data-label-text="{{Activer}}" data-l1key="isEnable" checked/>
-             <input type="checkbox" class="eqLogicAttr bootstrapSwitch" data-label-text="{{Visible}}" data-l1key="isVisible" checked/>
+             </select>
            </div>
          </div>
          <div class="form-group">
-           <label class="col-sm-3 control-label" >{{Service}}</label>
-           <div class="col-sm-3">
-            <select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="service">
-              <option value="samba">Samba</option>
-            </select>
-          </div>
-        </div>
-
-
-
-      </fieldset>
-    </form>
-
-  </div>
-  <div class="col-lg-6">
-    <form class="form-horizontal">
-      <fieldset>
-        <div class="service samba">
-         <div class="form-group">
-           <label class="col-sm-3 control-label" >{{IP}}</label>
-           <div class="col-sm-3">
-            <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="samba_ip" />
-          </div>
-        </div>
-        <div class="form-group">
-         <label class="col-sm-3 control-label" >{{Utilisateur}}</label>
+          <label class="col-sm-3 control-label" >{{Activer}}</label>
+          <div class="col-sm-9">
+           <input type="checkbox" class="eqLogicAttr bootstrapSwitch" data-label-text="{{Activer}}" data-l1key="isEnable" checked/>
+           <input type="checkbox" class="eqLogicAttr bootstrapSwitch" data-label-text="{{Visible}}" data-l1key="isVisible" checked/>
+         </div>
+       </div>
+       <div class="form-group">
+         <label class="col-sm-3 control-label" >{{Service}}</label>
          <div class="col-sm-3">
-          <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="samba_user" />
+          <select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="service">
+            <option value="none">{{Aucun}}</option>
+            <option value="samba">Samba</option>
+          </select>
+        </div>
+      </div>
+
+
+
+    </fieldset>
+  </form>
+
+</div>
+<div class="col-lg-6">
+  <form class="form-horizontal">
+    <fieldset>
+
+      <legend>{{Configuration}}</legend>
+
+      <div class="service samba" style="display:none;">
+       <div class="form-group">
+         <label class="col-sm-3 control-label" >{{IP}}</label>
+         <div class="col-sm-3">
+          <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="samba::ip" />
         </div>
       </div>
       <div class="form-group">
-       <label class="col-sm-3 control-label" >{{Mot de passe}}</label>
+       <label class="col-sm-3 control-label" >{{Utilisateur}}</label>
        <div class="col-sm-3">
-        <input type="password" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="samba_password" />
+        <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="samba::username" />
       </div>
     </div>
     <div class="form-group">
-     <label class="col-sm-3 control-label" >{{Partage}}</label>
+     <label class="col-sm-3 control-label" >{{Mot de passe}}</label>
      <div class="col-sm-3">
-      <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="samba_share" />
+      <input type="password" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="samba::password" />
     </div>
   </div>
   <div class="form-group">
-   <label class="col-sm-3 control-label" >{{Chemin}}</label>
+   <label class="col-sm-3 control-label" >{{Partage}}</label>
    <div class="col-sm-3">
-    <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="samba_path" />
+    <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="samba::share" />
   </div>
 </div>
-
+<div class="form-group">
+ <label class="col-sm-3 control-label" >{{Chemin}}</label>
+ <div class="col-sm-3">
+  <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="samba::path" />
+</div>
+</div>
 </div>
 
 </fieldset>

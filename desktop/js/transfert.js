@@ -15,6 +15,12 @@
  * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
  */
 
+
+$('.eqLogicAttr[data-l1key=configuration][data-l2key=service]').on('change',function(){
+    $('.service').hide();
+    $('.service.'+$(this).value()).show();
+});
+
 $("#table_cmd").sortable({axis: "y", cursor: "move", items: ".cmd", placeholder: "ui-state-highlight", tolerance: "intersect", forcePlaceholderSize: true});
 
 function addCmdToTable(_cmd) {
