@@ -85,7 +85,8 @@ class transfert extends eqLogic {
 
 	public function samba_clean($_limit = 3) {
 		$base_cmd = 'sudo smbclient ' . $this->getConfiguration('samba::share') . ' -U ' . $this->getConfiguration('samba::username') . '%' . $this->getConfiguration('samba::password') . ' -I ' . $this->getConfiguration('samba::ip');
-		$cmd = $base_cmd . '-c "cd ' . $this->getConfiguration('samba::path') . ';ls"';
+		$cmd = $base_cmd . ' -c "cd ' . $this->getConfiguration('samba::path') . ';ls"';
+		log::add('transfert', 'debug', $cmd);
 		$result = explode("\n", com_shell::execute($cmd));
 		$return = array();
 		for ($i = 2; $i < count($result) - 2; $i++) {
@@ -104,14 +105,19 @@ class transfert extends eqLogic {
 		}
 		usort($return, 'transfert::sortByDatetime');
 		$timelimit = strtotime('-' . $_limit . ' days');
-		$cmd = $base_cmd . '-c "cd ' . $this->getConfiguration('samba::path') . ';';
+		$cmd = $base_cmd . ' -c "cd ' . $this->getConfiguration('samba::path') . ';';
+		$find_file = false;
 		foreach (array_reverse($return) as $file) {
 			if ($timelimit > strtotime($file['datetime'])) {
+				$find_file = true;
 				$cmd .= 'del ' . $file['filename'] . ';';
 			}
 		}
-		$cmd .= '" >> /dev/null 2>&1';
-		com_shell::execute($cmd);
+		if ($find_file) {
+			$cmd .= '" >> /dev/null 2>&1';
+			log::add('transfert', 'debug', $cmd);
+			com_shell::execute($cmd);
+		}
 	}
 
 	/*     * **********************Getteur Setteur*************************** */
