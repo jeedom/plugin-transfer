@@ -55,13 +55,15 @@ class transfert extends eqLogic {
 		}
 		$cmd->setType('action');
 		$cmd->setSubType('slider');
+
+		$cmd->setDisplay('slider_placeholder', __('Nombre de jours à supprimer', __FILE__));
 		$cmd->setEqLogic_id($this->getId());
 		$cmd->save();
 	}
 
 	public function samba_put($_files = array()) {
 		$smb_file = array();
-		$cmd = '';
+		$cmd = 'sudo chmod 777 -R /tmp/jeedom_samba_transfert;';
 		if (!file_exists('/tmp/jeedom_samba_transfert')) {
 			mkdir('/tmp/jeedom_samba_transfert');
 		}
