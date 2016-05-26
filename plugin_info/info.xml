@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <info>
-    <id>transfert</id>
+    <id>transfer</id>
     <name>Transfert</name>
     <description>Plugin pour transferer des fichiers (capture caméra par exemple)</description>
     <icon>fa fa-keyboard-o</icon>

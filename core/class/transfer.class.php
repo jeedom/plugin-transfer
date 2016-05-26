@@ -19,7 +19,7 @@
 /* * ***************************Includes********************************* */
 require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
 
-class transfert extends eqLogic {
+class transfer extends eqLogic {
 	/*     * *************************Attributs****************************** */
 
 	/*     * ***********************Methode static*************************** */
@@ -36,7 +36,7 @@ class transfert extends eqLogic {
 	public function postSave() {
 		$cmd = $this->getCmd(null, 'send');
 		if (!is_object($cmd)) {
-			$cmd = new transfertCmd();
+			$cmd = new transferCmd();
 			$cmd->setLogicalId('send');
 			$cmd->setIsVisible(1);
 			$cmd->setName(__('Envoyer', __FILE__));
@@ -48,7 +48,7 @@ class transfert extends eqLogic {
 
 		$cmd = $this->getCmd(null, 'clean');
 		if (!is_object($cmd)) {
-			$cmd = new transfertCmd();
+			$cmd = new transferCmd();
 			$cmd->setLogicalId('clean');
 			$cmd->setIsVisible(1);
 			$cmd->setName(__('Nettoyer', __FILE__));
@@ -63,17 +63,17 @@ class transfert extends eqLogic {
 
 	public function samba_put($_files = array()) {
 		$smb_file = array();
-		$cmd = 'sudo chmod 777 -R /tmp/jeedom_samba_transfert;';
-		if (!file_exists('/tmp/jeedom_samba_transfert')) {
-			mkdir('/tmp/jeedom_samba_transfert');
+		$cmd = 'sudo chmod 777 -R /tmp/jeedom_samba_transfer;';
+		if (!file_exists('/tmp/jeedom_samba_transfer')) {
+			mkdir('/tmp/jeedom_samba_transfer');
 		}
 		foreach ($_files as $file) {
 			$info = pathinfo($file);
 			$filename = str_replace(array('_', ':'), array('-', '-'), $info['basename']);
-			$cmd .= 'cp ' . $file . ' /tmp/jeedom_samba_transfert/' . $filename . ';';
+			$cmd .= 'cp ' . $file . ' /tmp/jeedom_samba_transfer/' . $filename . ';';
 			$smb_file[] = $filename;
 		}
-		$cmd .= 'cd /tmp/jeedom_samba_transfert;';
+		$cmd .= 'cd /tmp/jeedom_samba_transfer;';
 		$cmd .= 'sudo smbclient ' . $this->getConfiguration('samba::share') . ' -U ' . $this->getConfiguration('samba::username') . '%' . $this->getConfiguration('samba::password') . ' -I ' . $this->getConfiguration('samba::ip');
 		$cmd .= ' -c "cd ' . $this->getConfiguration('samba::path') . ';';
 		foreach ($smb_file as $file) {
@@ -81,20 +81,20 @@ class transfert extends eqLogic {
 		}
 		$cmd .= '" >> /dev/null 2>&1;';
 		foreach ($smb_file as $file) {
-			$cmd .= 'sudo rm /tmp/jeedom_samba_transfert/' . $file . ';';
+			$cmd .= 'sudo rm /tmp/jeedom_samba_transfer/' . $file . ';';
 		}
-		log::add('transfert', 'debug', $cmd);
+		log::add('transfer', 'debug', $cmd);
 		try {
 			com_shell::execute($cmd);
 		} catch (Exception $e) {
-			log::add('transfert', 'error', __('Erreur lors du transfert samba de : ', __FILE__) . $file . ' : ' . log::exception($e));
+			log::add('transfer', 'error', __('Erreur lors du transfert samba de : ', __FILE__) . $file . ' : ' . log::exception($e));
 		}
 	}
 
 	public function samba_clean($_limit = 3) {
 		$base_cmd = 'sudo smbclient ' . $this->getConfiguration('samba::share') . ' -U ' . $this->getConfiguration('samba::username') . '%' . $this->getConfiguration('samba::password') . ' -I ' . $this->getConfiguration('samba::ip');
 		$cmd = $base_cmd . ' -c "cd ' . $this->getConfiguration('samba::path') . ';ls"';
-		log::add('transfert', 'debug', $cmd);
+		log::add('transfer', 'debug', $cmd);
 		$result = explode("\n", com_shell::execute($cmd));
 		$return = array();
 		for ($i = 2; $i < count($result) - 2; $i++) {
@@ -111,7 +111,7 @@ class transfert extends eqLogic {
 			$file_info['datetime'] = date('Y-m-d H:i:s', strtotime($line[5] . ' ' . $line[4] . ' ' . $line[7] . ' ' . $line[6]));
 			$return[] = $file_info;
 		}
-		usort($return, 'transfert::sortByDatetime');
+		usort($return, 'transfer::sortByDatetime');
 		$timelimit = strtotime('-' . $_limit . ' days');
 		$cmd = $base_cmd . ' -c "cd ' . $this->getConfiguration('samba::path') . ';';
 		$find_file = false;
@@ -123,7 +123,7 @@ class transfert extends eqLogic {
 		}
 		if ($find_file) {
 			$cmd .= '" >> /dev/null 2>&1';
-			log::add('transfert', 'debug', $cmd);
+			log::add('transfer', 'debug', $cmd);
 			com_shell::execute($cmd);
 		}
 	}
@@ -131,7 +131,7 @@ class transfert extends eqLogic {
 	/*     * **********************Getteur Setteur*************************** */
 }
 
-class transfertCmd extends cmd {
+class transferCmd extends cmd {
 	/*     * *************************Attributs****************************** */
 
 	/*     * ***********************Methode static*************************** */
