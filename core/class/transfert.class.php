@@ -70,7 +70,7 @@ class transfert extends eqLogic {
 		foreach ($_files as $file) {
 			$info = pathinfo($file);
 			$filename = str_replace(array('_', ':'), array('-', '-'), $info['basename']);
-			$cmd .= 'mv ' . $file . ' /tmp/jeedom_samba_transfert/' . $filename . ';';
+			$cmd .= 'cp ' . $file . ' /tmp/jeedom_samba_transfert/' . $filename . ';';
 			$smb_file[] = $filename;
 		}
 		$cmd .= 'cd /tmp/jeedom_samba_transfert;';
