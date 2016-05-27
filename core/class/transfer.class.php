@@ -62,27 +62,17 @@ class transfer extends eqLogic {
 	}
 
 	public function samba_put($_files = array()) {
-		$smb_file = array();
-		$cmd = 'sudo chmod 777 -R /tmp/jeedom_samba_transfer;';
-		if (!file_exists('/tmp/jeedom_samba_transfer')) {
-			mkdir('/tmp/jeedom_samba_transfer');
+		$cmd = 'sudo smbclient ' . $this->getConfiguration('samba::share') . ' -U ' . $this->getConfiguration('samba::username') . '%' . $this->getConfiguration('samba::password') . ' -I ' . $this->getConfiguration('samba::ip') . ' -c "';
+		if ($this->getConfiguration('samba::path') != '') {
+			$cmd .= ' cd ' . $this->getConfiguration('samba::path') . ';';
 		}
 		foreach ($_files as $file) {
 			$info = pathinfo($file);
 			$filename = str_replace(array('_', ':'), array('-', '-'), $info['basename']);
-			$cmd .= 'cp ' . $file . ' /tmp/jeedom_samba_transfer/' . $filename . ';';
-			$smb_file[] = $filename;
-		}
-		$cmd .= 'cd /tmp/jeedom_samba_transfer;';
-		$cmd .= 'sudo smbclient ' . $this->getConfiguration('samba::share') . ' -U ' . $this->getConfiguration('samba::username') . '%' . $this->getConfiguration('samba::password') . ' -I ' . $this->getConfiguration('samba::ip');
-		$cmd .= ' -c "cd ' . $this->getConfiguration('samba::path') . ';';
-		foreach ($smb_file as $file) {
-			$cmd .= 'put ' . $file . ';';
+			$cmd .= 'put ' . $file . ' ' . $filename . ';';
+
 		}
 		$cmd .= '" >> /dev/null 2>&1;';
-		foreach ($smb_file as $file) {
-			$cmd .= 'sudo rm /tmp/jeedom_samba_transfer/' . $file . ';';
-		}
 		log::add('transfer', 'debug', $cmd);
 		try {
 			com_shell::execute($cmd);
