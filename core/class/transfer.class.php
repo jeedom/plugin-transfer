@@ -68,7 +68,7 @@ class transfer extends eqLogic {
 		}
 		foreach ($_files as $file) {
 			$info = pathinfo($file);
-			$filename = str_replace(array('_', ':'), array('-', '-'), $info['basename']);
+			$filename = str_replace(array('_', ':', ' '), array('-', '-', '-'), $info['basename']);
 			$cmd .= 'put ' . $file . ' ' . $filename . ';';
 
 		}

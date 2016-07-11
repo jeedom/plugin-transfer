@@ -71,13 +71,13 @@ foreach (object::all() as $object) {
            </div>
          </div>
          <div class="form-group">
-          <label class="col-sm-3 control-label" >{{Activer}}</label>
+          <label class="col-sm-3 control-label"></label>
           <div class="col-sm-9">
-           <input type="checkbox" class="eqLogicAttr bootstrapSwitch" data-label-text="{{Activer}}" data-l1key="isEnable" checked/>
-           <input type="checkbox" class="eqLogicAttr bootstrapSwitch" data-label-text="{{Visible}}" data-l1key="isVisible" checked/>
-         </div>
-       </div>
-       <div class="form-group">
+            <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="isEnable" checked/>{{Activer}}</label>
+            <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="isVisible" checked/>{{Visible}}</label>
+          </div>
+        </div>
+        <div class="form-group">
          <label class="col-sm-3 control-label" >{{Service}}</label>
          <div class="col-sm-3">
           <select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="service">
@@ -86,9 +86,6 @@ foreach (object::all() as $object) {
           </select>
         </div>
       </div>
-
-
-
     </fieldset>
   </form>
 
