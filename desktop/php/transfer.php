@@ -45,87 +45,97 @@ foreach ($eqLogics as $eqLogic) {
 </div>
 
 <div class="col-lg-10 col-md-9 col-sm-8 eqLogic" style="border-left: solid 1px #EEE; padding-left: 25px;display: none;">
-  <div class="row">
-    <div class="col-lg-6">
-      <form class="form-horizontal">
-        <fieldset>
-          <legend><i class="fa fa-arrow-circle-left eqLogicAction cursor" data-action="returnToThumbnailDisplay"></i> {{Général}}  <i class='fa fa-cogs eqLogicAction pull-right cursor expertModeVisible' data-action='configure'></i></legend>
-          <div class="form-group">
-            <label class="col-sm-3 control-label">{{Nom de l'équipement transfert}}</label>
-            <div class="col-sm-3">
-              <input type="text" class="eqLogicAttr form-control" data-l1key="id" style="display : none;" />
-              <input type="text" class="eqLogicAttr form-control" data-l1key="name" placeholder="{{Nom de l'équipement transfert}}"/>
+ <a class="btn btn-success eqLogicAction pull-right" data-action="save"><i class="fa fa-check-circle"></i> {{Sauvegarder}}</a>
+ <a class="btn btn-danger eqLogicAction pull-right" data-action="remove"><i class="fa fa-minus-circle"></i> {{Supprimer}}</a>
+
+ <ul class="nav nav-tabs" role="tablist">
+  <li role="presentation" class="active"><a href="#eqlogictab" aria-controls="home" role="tab" data-toggle="tab"><i class="fa fa-tachometer"></i> {{Equipement}}</a></li>
+  <li role="presentation"><a href="#commandtab" aria-controls="profile" role="tab" data-toggle="tab"><i class="fa fa-list-alt"></i> {{Commandes}}</a></li>
+</ul>
+
+<div class="tab-content" style="height:calc(100% - 50px);overflow:auto;overflow-x: hidden;">
+  <div role="tabpanel" class="tab-pane active" id="eqlogictab">
+    <div class="row">
+      <div class="col-lg-6">
+        <form class="form-horizontal">
+          <fieldset>
+            <legend><i class="fa fa-arrow-circle-left eqLogicAction cursor" data-action="returnToThumbnailDisplay"></i> {{Général}}  <i class='fa fa-cogs eqLogicAction pull-right cursor expertModeVisible' data-action='configure'></i></legend>
+            <div class="form-group">
+              <label class="col-sm-3 control-label">{{Nom de l'équipement transfert}}</label>
+              <div class="col-sm-3">
+                <input type="text" class="eqLogicAttr form-control" data-l1key="id" style="display : none;" />
+                <input type="text" class="eqLogicAttr form-control" data-l1key="name" placeholder="{{Nom de l'équipement transfert}}"/>
+              </div>
             </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-3 control-label" >{{Objet parent}}</label>
-            <div class="col-sm-3">
-              <select id="sel_object" class="eqLogicAttr form-control" data-l1key="object_id">
-                <option value="">{{Aucun}}</option>
-                <?php
+            <div class="form-group">
+              <label class="col-sm-3 control-label" >{{Objet parent}}</label>
+              <div class="col-sm-3">
+                <select id="sel_object" class="eqLogicAttr form-control" data-l1key="object_id">
+                  <option value="">{{Aucun}}</option>
+                  <?php
 foreach (object::all() as $object) {
 	echo '<option value="' . $object->getId() . '">' . $object->getName() . '</option>';
 }
 ?>
-             </select>
+               </select>
+             </div>
            </div>
-         </div>
+           <div class="form-group">
+            <label class="col-sm-3 control-label"></label>
+            <div class="col-sm-9">
+              <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="isEnable" checked/>{{Activer}}</label>
+              <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="isVisible" checked/>{{Visible}}</label>
+            </div>
+          </div>
+          <div class="form-group">
+           <label class="col-sm-3 control-label" >{{Service}}</label>
+           <div class="col-sm-3">
+            <select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="service">
+              <option value="none">{{Aucun}}</option>
+              <option value="samba">Samba</option>
+            </select>
+          </div>
+        </div>
+      </fieldset>
+    </form>
+
+  </div>
+  <div class="col-lg-6">
+    <form class="form-horizontal">
+      <fieldset>
+
+        <legend>{{Configuration}}</legend>
+
+        <div class="service samba" style="display:none;">
          <div class="form-group">
-          <label class="col-sm-3 control-label"></label>
-          <div class="col-sm-9">
-            <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="isEnable" checked/>{{Activer}}</label>
-            <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="isVisible" checked/>{{Visible}}</label>
+           <label class="col-sm-3 control-label" >{{IP}}</label>
+           <div class="col-sm-3">
+            <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="samba::ip" />
           </div>
         </div>
         <div class="form-group">
-         <label class="col-sm-3 control-label" >{{Service}}</label>
+         <label class="col-sm-3 control-label" >{{Utilisateur}}</label>
          <div class="col-sm-3">
-          <select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="service">
-            <option value="none">{{Aucun}}</option>
-            <option value="samba">Samba</option>
-          </select>
-        </div>
-      </div>
-    </fieldset>
-  </form>
-
-</div>
-<div class="col-lg-6">
-  <form class="form-horizontal">
-    <fieldset>
-
-      <legend>{{Configuration}}</legend>
-
-      <div class="service samba" style="display:none;">
-       <div class="form-group">
-         <label class="col-sm-3 control-label" >{{IP}}</label>
-         <div class="col-sm-3">
-          <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="samba::ip" />
+          <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="samba::username" />
         </div>
       </div>
       <div class="form-group">
-       <label class="col-sm-3 control-label" >{{Utilisateur}}</label>
+       <label class="col-sm-3 control-label" >{{Mot de passe}}</label>
        <div class="col-sm-3">
-        <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="samba::username" />
+        <input type="password" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="samba::password" />
       </div>
     </div>
     <div class="form-group">
-     <label class="col-sm-3 control-label" >{{Mot de passe}}</label>
+     <label class="col-sm-3 control-label" >{{Partage}}</label>
      <div class="col-sm-3">
-      <input type="password" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="samba::password" />
+      <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="samba::share" />
     </div>
   </div>
   <div class="form-group">
-   <label class="col-sm-3 control-label" >{{Partage}}</label>
+   <label class="col-sm-3 control-label" >{{Chemin}}</label>
    <div class="col-sm-3">
-    <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="samba::share" />
+    <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="samba::path" />
   </div>
-</div>
-<div class="form-group">
- <label class="col-sm-3 control-label" >{{Chemin}}</label>
- <div class="col-sm-3">
-  <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="samba::path" />
-</div>
 </div>
 </div>
 
@@ -134,26 +144,21 @@ foreach (object::all() as $object) {
 </div>
 </div>
 
+</div>
+<div role="tabpanel" class="tab-pane" id="commandtab">
+  <table id="table_cmd" class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>{{Nom}}</th><th>{{Action}}</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
 
-<legend>{{Commandes}}</legend>
-<table id="table_cmd" class="table table-bordered table-condensed">
-  <thead>
-    <tr>
-      <th>{{Nom}}</th><th>{{Action}}</th>
-    </tr>
-  </thead>
-  <tbody>
-  </tbody>
-</table>
+</div>
+</div>
 
-<form class="form-horizontal">
-  <fieldset>
-    <div class="form-actions">
-      <a class="btn btn-danger eqLogicAction" data-action="remove"><i class="fa fa-minus-circle"></i> {{Supprimer}}</a>
-      <a class="btn btn-success eqLogicAction" data-action="save"><i class="fa fa-check-circle"></i> {{Sauvegarder}}</a>
-    </div>
-  </fieldset>
-</form>
 
 </div>
 </div>
