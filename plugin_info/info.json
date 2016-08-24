@@ -1,0 +1,9 @@
+{
+	"id" : "transfer",
+	"name" : "Transfert",
+	"description" : "Plugin pour transferer des fichiers (capture caméra par exemple)",
+	"licence" : "AGPL",
+	"author" : "Loïc",
+	"require" : "2.3",
+	"category" : "programming"
+}
