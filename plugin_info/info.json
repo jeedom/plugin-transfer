@@ -4,6 +4,8 @@
 	"description" : "Plugin pour transferer des fichiers (capture caméra par exemple)",
 	"licence" : "AGPL",
 	"author" : "Loïc",
-	"require" : "2.4",
-	"category" : "programming"
+	"require" : "3.0",
+	"category" : "programming",
+	"changelog" : "https://github.com/jeedom/plugin-transfer/blob/stable/doc/#language#/changelog.asciidoc",
+	"documentation" : "https://github.com/jeedom/plugin-transfer/blob/stable/doc/#language#/index.asciidoc"
 }
